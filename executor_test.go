@@ -8,15 +8,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// func TestExec(t *testing.T) {
-// 	stdout, stderr, err := Exec("echo 1", "/", nil)
-// 	require.Nil(t, err)
-// 	require.Equal(t, "1\n", string(stdout))
-// 	require.Equal(t, "", string(stderr))
-// }
-
-// func TestPipe()
-
 func TestParseCommand(t *testing.T) {
 	cmd := parseCommand("ps", "")
 	require.Equal(t, "ps", cmd.cmd)
@@ -30,45 +21,7 @@ func TestParseCommand(t *testing.T) {
 	require.Equal(t, "echo", cmd.cmd)
 	require.Equal(t, []string{"test"}, cmd.args)
 	require.Equal(t, 1, len(cmd.outputs))
-	// require.Equal(t, "out.txt", cmd.outputFile)
-	// require.Equal(t, "", cmd.inputFile)
-
-	// cmd = parseCommand("echo test <  in.txt")
-	// require.Equal(t, "echo", cmd.cmd)
-	// require.Equal(t, []string{"test"}, cmd.args)
-	// require.Equal(t, "in.txt", cmd.inputFile)
-	// require.Equal(t, "", cmd.outputFile)
-
-	// cmd = parseCommand("echo test <  in.txt > out.txt")
-	// require.Equal(t, "echo", cmd.cmd)
-	// require.Equal(t, []string{"test"}, cmd.args)
-	// require.Equal(t, "in.txt", cmd.inputFile)
-	// require.Equal(t, "out.txt", cmd.outputFile)
 }
-
-// func TestParse(t *testing.T) {
-// 	commands := parse("echo 1")
-// 	require.Equal(t, 1, len(commands))
-// 	require.Equal(t, "echo", commands[0].cmd)
-// 	require.Equal(t, []string{"1"}, commands[0].args)
-// 	require.Equal(t, nil, commands[0].outputPipe)
-// 	require.Equal(t, nil, commands[0].inputPipe)
-
-// 	commands = parse("echo 1 && cat test.txt")
-// 	require.Equal(t, 2, len(commands))
-// 	require.Equal(t, "echo", commands[0].cmd)
-// 	require.Equal(t, []string{"1"}, commands[0].args)
-// 	require.Equal(t, "cat", commands[1].cmd)
-// 	require.Equal(t, []string{"test.txt"}, commands[1].args)
-
-// 	commands = parse("echo 2 | cat")
-// 	require.Equal(t, 2, len(commands))
-// 	require.Equal(t, "echo", commands[0].cmd)
-// 	require.Equal(t, []string{"2"}, commands[0].args)
-// 	require.Equal(t, "cat", commands[1].cmd)
-// 	require.Equal(t, 0, len(commands[1].args))
-
-// }
 
 func TestJoin(t *testing.T) {
 	require.Equal(t, "/var/1.txt", join("/var", "1.txt"))

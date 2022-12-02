@@ -1,6 +1,7 @@
 package executor
 
 import (
+	"io/ioutil"
 	"os"
 	"testing"
 
@@ -15,8 +16,7 @@ func TestRead(t *testing.T) {
 	in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
 	Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`)
 
-	tmpfile, err := os.CreateTemp("./", "example")
-	require.Nil(t, err)
+	tmpfile, _ := ioutil.TempFile("./", "example")
 	defer os.Remove(tmpfile.Name()) // clean up
 
 	tmpfile.Write(content)
@@ -44,8 +44,7 @@ func TestRead(t *testing.T) {
 }
 
 func TestWrite(t *testing.T) {
-	tmpfile, err := os.CreateTemp("./", "example")
-	require.Nil(t, err)
+	tmpfile, _ := ioutil.TempFile("./", "example")
 	defer os.Remove(tmpfile.Name()) // clean up
 
 	f := outputFile{

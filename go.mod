@@ -1,6 +1,6 @@
-module github.com/onrik/executor/v2
+module github.com/solar-jsoc/executor
 
-go 1.19
+go 1.17
 
 require github.com/stretchr/testify v1.7.0
 

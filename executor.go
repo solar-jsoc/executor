@@ -3,6 +3,7 @@ package executor
 import (
 	"bytes"
 	"io"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +21,6 @@ func (b *buff) Close() error {
 type command struct {
 	cmd     string
 	args    []string
-	env     []string
 	inputs  []io.ReadCloser
 	outputs []io.WriteCloser
 	stderr  io.Writer
@@ -41,7 +41,6 @@ func (c *command) run(dir string) error {
 
 	cmd := exec.Command(c.cmd, c.args...)
 	cmd.Dir = dir
-	cmd.Env = c.env
 	cmd.Stdin = io.MultiReader(inputs...)
 	cmd.Stdout = io.MultiWriter(outputs...)
 	cmd.Stderr = c.stderr
@@ -50,9 +49,9 @@ func (c *command) run(dir string) error {
 }
 
 // Exec command
-func Exec(cmd, dir string, env []string, stdin io.ReadCloser) ([]byte, []byte, error) {
+func Exec(cmd, dir string, stdin io.ReadCloser) ([]byte, []byte, error) {
 	if dir == "" {
-		tempDir, err := os.MkdirTemp("", "")
+		tempDir, err := ioutil.TempDir("", "")
 		if err != nil {
 			return nil, nil, err
 		}
@@ -67,7 +66,6 @@ func Exec(cmd, dir string, env []string, stdin io.ReadCloser) ([]byte, []byte, e
 	stdout := &buff{}
 	stderr := &buff{}
 	for i := range commands {
-		commands[i].env = env
 		commands[i].stderr = stderr
 		if len(commands[i].outputs) == 0 {
 			commands[i].outputs = append(commands[i].outputs, stdout)

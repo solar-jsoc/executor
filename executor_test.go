@@ -67,9 +67,9 @@ func TestParse(t *testing.T) {
 
 func TestExec(t *testing.T) {
 	r := io.NopCloser(strings.NewReader(""))
-	_, _, err := Exec("echo 1 && cat file.go", "", r)
+	_, _, err := Exec("echo 1 && cat file.go", "", nil, r)
 	require.Equal(t, err.Error(), "exit status 1")
-	_, _, err = Exec("echo 1 && cat file.go", "./", r)
+	_, _, err = Exec("echo 1 && cat file.go", "./", nil, r)
 	require.Nil(t, err)
 }
 
